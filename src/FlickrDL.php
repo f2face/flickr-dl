@@ -1,7 +1,7 @@
 <?php
 /**
  *  @file FlickrDL.php
- *  @brief Download the largest size of Flickr photo
+ *  Get the largest photo from Flickr URL.
  */
 namespace f2face\FlickrDL;
 
