@@ -13,7 +13,7 @@ class FlickrDL
     
     public function __construct($api_key = null)
     {
-        $this->api_key = is_string($api_key) ? $api_key : '39bf0d19f3415af572548735d6b817e1';
+        $this->api_key = $api_key;
     }
     
     public function setApiKey(string $api_key)
@@ -29,13 +29,28 @@ class FlickrDL
     
     public function getBest(string $url)
     {
-        return end($this->retrieveSizes($url));
+        $sizes = $this->retrieveSizes($url);
+        return end($sizes);
     }
     
     public function getSquare(string $url)
     {
         $sizes = $this->retrieveSizes($url);
         return $sizes[0];
+    }
+    
+    public function refreshApiKey()
+    {
+        // Get the latest API key from API Explorer
+        $flickr_api_explorer = 'https://www.flickr.com/services/api/explore/flickr.photos.getSizes';
+        $data = file_get_contents($flickr_api_explorer);
+        preg_match('#"api_key":"(\w+)"#i', $data, $match);
+        
+        if (empty($match[1]))
+            throw new \Exception('Failed refreshing the API key.');
+        
+        $this->api_key = $match[1];
+        return $match[1];
     }
     
     protected function retrieveSizes(string $url)
