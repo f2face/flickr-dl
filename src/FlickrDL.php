@@ -29,6 +29,17 @@ class FlickrDL
     
     public function getBest(string $url)
     {
+        return end($this->retrieveSizes($url));
+    }
+    
+    public function getSquare(string $url)
+    {
+        $sizes = $this->retrieveSizes($url);
+        return $sizes[0];
+    }
+    
+    protected function retrieveSizes(string $url)
+    {
         $api = sprintf($this->api_endpoint, $this->api_key, $this->getFileIdFromUrl($url));
         
         $obj = $this->getResourceAndSanitizeData($api);
@@ -36,7 +47,7 @@ class FlickrDL
         if (empty($obj->sizes->size))
             throw new \Exception('Photo not found', 404);
         
-        return end($obj->sizes->size);
+        return $obj->sizes->size;
     }
     
     protected function getFileIdFromUrl(string $url)
