@@ -1,0 +1,19 @@
+{
+    "name": "f2face/flickr-dl",
+    "description": "Flickr photo downloader",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Surya Oktafendri",
+            "email": "f2face@f2face.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "f2face\\FlickrDL\\": "src/"
+        }
+    }
+}
