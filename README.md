@@ -1,2 +1,3 @@
 # flickr-dl
-Flickr downloader
+Flickr downloader.
+Get the largest photo from Flickr URL.
