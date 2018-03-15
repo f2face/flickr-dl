@@ -9,7 +9,7 @@ class FlickrDL
 {
     protected $api_key;
     
-    private $api_endpoint = 'https://www.flickr.com/services/api/render?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1';
+    private $api_endpoint = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&api_key=%s&photo_id=%s';
     
     public function __construct($api_key = null)
     {
@@ -82,17 +82,10 @@ class FlickrDL
     protected function getResourceAndSanitizeData(string $api_url)
     {
         $data = NULL;
-        
         if (function_exists('file_get_contents'))
             $data = file_get_contents($api_url);
         
-        preg_match(
-            '#<pre>(.+)</pre>#',
-            preg_replace('#(\r|\n)#', '', $data),
-            $match
-        );
-        
-        $obj = json_decode($match[1]);
+        $obj = json_decode($data);
         
         if (!$obj)
             throw new \Exception('Error parsing data.', 500);
