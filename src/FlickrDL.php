@@ -71,6 +71,7 @@ class FlickrDL
         if (empty($obj->sizes->size)) {
             throw new \Exception('Photo not found', 404);
         }
+
         return $obj->sizes->size;
     }
 
@@ -101,6 +102,7 @@ class FlickrDL
         if (!$obj) {
             throw new \Exception('Error parsing data.', 500);
         }
+
         return $obj;
     }
 }

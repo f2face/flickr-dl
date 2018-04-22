@@ -3,8 +3,8 @@
 // Autoload
 require_once __DIR__.'/../vendor/autoload.php';
 
-use f2face\FlickrDL\FlickrDL;
 use Commando\Command;
+use f2face\FlickrDL\FlickrDL;
 
 // Photo save path
 define('SAVE_PATH', __DIR__.'/downloads');
@@ -16,7 +16,7 @@ $cmd->option()
     ->aka('u')
     ->require()
     ->describedAs('Flickr photo URL')
-    ->must(function($url){
+    ->must(function ($url) {
         return preg_match('#^https?://(?:www\.)?flickr\.com/.+?$#', $url);
     });
 
