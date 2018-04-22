@@ -48,18 +48,22 @@ class FlickrDL
         // Get the latest API key from API Explorer
         $flickr_api_explorer = 'https://www.flickr.com/services/api/explore/flickr.photos.getSizes';
         $data = file_get_contents($flickr_api_explorer);
-        preg_match('#"api_key":"(\w+)"#i', $data, $match);
+        preg_match('#"api_key":"(?P<api_key>\w+?)"#i', $data, $match);
 
-        if (empty($match[1])) {
+        if (empty($match['api_key'])) {
             throw new \Exception('Failed refreshing the API key.');
         }
-        $this->api_key = $match[1];
+        $this->api_key = $match['api_key'];
 
-        return $match[1];
+        return $this->api_key;
     }
 
     protected function retrieveSizes(string $url)
     {
+        if (empty($this->api_key)) {
+            $this->refreshApiKey();
+        }
+
         $api = sprintf($this->api_endpoint, $this->api_key, $this->getFileIdFromUrl($url));
 
         $obj = $this->getResourceAndSanitizeData($api);
@@ -75,7 +79,7 @@ class FlickrDL
         if (!$this->isValidFlickrUrl($url)) {
             throw new \Exception('URL is not valid.', 404);
         }
-        preg_match('#/(\d+)/?#', $url, $match);
+        preg_match('#/(\d+)/#', $url, $match);
 
         return $match[1];
     }
