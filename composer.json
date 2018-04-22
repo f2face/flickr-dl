@@ -11,6 +11,14 @@
     ],
     "minimum-stability": "stable",
     "require": {},
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.11"
+    },
+    "scripts": {
+        "codestyle": [
+            "php-cs-fixer fix --config=.php_cs.dist --allow-risky yes"
+        ]
+    },
     "autoload": {
         "psr-4": {
             "f2face\\FlickrDL\\": "src/"
